@@ -7,6 +7,9 @@
  * come from linux kernel
  */
 
+#ifndef _LIST_H_
+#define _LIST_H_
+
 #include <stddef.h>
 #include "kernel.h"
 
@@ -224,3 +227,6 @@ static inline int list_empty(const struct list_head *head)
 
 #define __list_for_each_reverse(pos, head) \
     for (pos = (head)->prev; pos != (head); pos = pos->prev)
+
+
+#endif /* _LIST_H_ */
