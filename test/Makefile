@@ -11,7 +11,7 @@ LDFLAGS	=
 INCLUDE = 
 INCLUDE += -I../include
 
-BIN = test_list.out
+BIN = test_list.out test_air_config.out
 LIB = ../src/libair.a
 
 %.o: %.c
@@ -20,7 +20,7 @@ LIB = ../src/libair.a
 
 %.out: %.o ../src/libair.a
 	@echo CC $^ -o $@ 
-	@$(CC) $^ -o $@ $(LDFLAGS)
+	@$(CC) $^ -o $@ $(LDFLAGS) $(INCLUDE)
 
 .PHONY: clean all test
 

@@ -2,7 +2,7 @@ CC = gcc
 AR = ar
 
 CFLAGS	= -Wall -g
-#CFLAGS += -D_DEBUG_COLOR
+#CFLAGS += -D_AIR_DEBUG
 #CFLAGS += $(shell pkg-config --cflags glib-2.0 )
 
 LDFLAGS	= 
@@ -12,7 +12,7 @@ LDFLAGS	=
 INCLUDE = 
 INCLUDE += -I../include
 
-OBJ = list.o
+OBJ = list.o air_config.o
 
 LIB = libair.a
 
