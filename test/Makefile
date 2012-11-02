@@ -11,7 +11,7 @@ LDFLAGS	=
 INCLUDE = 
 INCLUDE += -I../include
 
-BIN = test_list.out test_air_config.out
+BIN = test_list.out test_air_config.out test_air_log.out
 LIB = ../src/libair.a
 
 %.o: %.c

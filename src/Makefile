@@ -12,7 +12,7 @@ LDFLAGS	=
 INCLUDE = 
 INCLUDE += -I../include
 
-OBJ = list.o air_config.o
+OBJ = list.o air_config.o air_log.o
 
 LIB = libair.a
 
