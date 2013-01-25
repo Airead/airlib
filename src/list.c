@@ -7,5 +7,39 @@
  * come from kernel source code
  */
 
+#include <stdlib.h>
+#include <string.h>
 #include "list.h"
 
+int list_init(struct list_head *h, unsigned long size, unsigned long len)
+{
+    int i;
+    struct list_head *list, *_p, *tmp;
+
+    for (i = 0; i < len; i++) {
+        if ((list = malloc(size)) == NULL) {
+            goto failed;
+        }
+        memset(list, 0, size);
+        list_add(list, h);
+    }
+
+    return i;
+failed:
+    list_for_each_safe(_p, tmp, h) {
+        free(_p);
+    }
+    return -1;
+}
+
+struct list_head *list_loop_get_next(struct list_head *h, struct list_head *list)
+{
+    struct list_head *_p;
+
+    _p = list->next;
+    if (_p == h) {
+        _p = h->next;
+    }
+
+    return _p;
+}
