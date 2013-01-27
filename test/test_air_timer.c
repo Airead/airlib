@@ -33,7 +33,7 @@ int test_timer_run(void *data, unsigned long len)
 {
     int *num = data;
 
-    fprintf(stdout, "num %d\n", *num);
+    fprintf(stdout, "[%lu] num %d\n", air_timer_curtime(0), *num);
 
     return TIMER_CONTINUE;
 }
@@ -76,11 +76,11 @@ int main(int argc, char *argv[])
     air_timer_init();
 
     num = 1;
-    at = air_timer_new(1000, &test_timer_ops_continue, &num, sizeof(num));
+    at = air_timer_new(1, &test_timer_ops_continue, &num, sizeof(num));
     air_timer_add(at, &timer_head);
 
     num = 2;
-    at = air_timer_new(3000, &test_timer_ops_once, &num, sizeof(num));
+    at = air_timer_new(3, &test_timer_ops_once, &num, sizeof(num));
     air_timer_add(at, &timer_head);
 
     num = 3;
@@ -88,11 +88,11 @@ int main(int argc, char *argv[])
     air_timer_add(at, &timer_head);
 
     while (1) {
+        air_timer_run(&timer_head, 0);
         if (read(STDIN_FILENO, buf, 1) < 0) {
             fprintf(stderr, "read failed: %s\n", strerror(errno));
         }
         fprintf(stdout, "=================================\n");
-        air_timer_run(&timer_head, 0);
     }
     
     return 0;
