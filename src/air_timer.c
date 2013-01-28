@@ -118,9 +118,9 @@ int air_timer_setitimer(struct list_head *h)
     struct itimerval tick;
     struct list_head *_p;
     struct air_timer_s *at;
-    unsigned long min_ms, tmp;
+    long min_ms, tmp;
 
-    min_ms = ULONG_MAX;
+    min_ms = LONG_MAX;
     __list_for_each(_p, h) {
         at = list_entry(_p, struct air_timer_s, list);
         tmp = at->regtime + at->expires;
@@ -134,7 +134,7 @@ int air_timer_setitimer(struct list_head *h)
         raise(SIGALRM);
     }
 
-    if (min_ms > 0 && min_ms < ULONG_MAX) {
+    if (min_ms > 0 && min_ms < LONG_MAX) {
         getitimer(ITIMER_REAL, &tick);
         DEBUG("min_ms %lu, sec %lu, usec %lu\n", 
                 min_ms, tick.it_value.tv_sec, tick.it_value.tv_usec);
