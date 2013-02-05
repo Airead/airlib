@@ -33,7 +33,8 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 noinst_PROGRAMS = test_list.out$(EXEEXT) test_air_config.out$(EXEEXT) \
-	test_air_log.out$(EXEEXT) test_air_timer.out$(EXEEXT)
+	test_air_log.out$(EXEEXT) test_air_timer.out$(EXEEXT) \
+	test_list_unit$(EXEEXT)
 subdir = test
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -57,6 +58,9 @@ test_air_timer_out_DEPENDENCIES = ../src/libair.a
 test_list_out_SOURCES = test_list.c
 test_list_out_OBJECTS = test_list.$(OBJEXT)
 test_list_out_DEPENDENCIES = ../src/libair.a
+test_list_unit_SOURCES = test_list_unit.c
+test_list_unit_OBJECTS = test_list_unit.$(OBJEXT)
+test_list_unit_DEPENDENCIES = $(LDLIB)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -66,9 +70,9 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = test_air_config.c test_air_log.c test_air_timer.c \
-	test_list.c
+	test_list.c test_list_unit.c
 DIST_SOURCES = test_air_config.c test_air_log.c test_air_timer.c \
-	test_list.c
+	test_list.c test_list_unit.c
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -160,14 +164,17 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AM_CPPFLAGS = -I$(top_srcdir)/include
-test_list_out_SOURCE = test_list.c
-test_list_out_LDADD = ../src/libair.a
+LDLIB = ../src/libair.a /usr/local/lib/liblcut.a
 test_air_config_out_SOURCE = test_air_config.c
 test_air_config_out_LDADD = ../src/libair.a
 test_air_log_out_SOURCE = test_air_log.c 
 test_air_log_out_LDADD = ../src/libair.a
 test_air_timer_out_SOURCE = test_air_timer.c
 test_air_timer_out_LDADD = ../src/libair.a
+test_list_out_SOURCE = test_list.c
+test_list_out_LDADD = ../src/libair.a
+test_list_unit_SOURCE = test_list_unit.c
+test_list_unit_LDADD = $(LDLIB)
 all: all-am
 
 .SUFFIXES:
@@ -217,6 +224,9 @@ test_air_timer.out$(EXEEXT): $(test_air_timer_out_OBJECTS) $(test_air_timer_out_
 test_list.out$(EXEEXT): $(test_list_out_OBJECTS) $(test_list_out_DEPENDENCIES) $(EXTRA_test_list_out_DEPENDENCIES) 
 	@rm -f test_list.out$(EXEEXT)
 	$(LINK) $(test_list_out_OBJECTS) $(test_list_out_LDADD) $(LIBS)
+test_list_unit$(EXEEXT): $(test_list_unit_OBJECTS) $(test_list_unit_DEPENDENCIES) $(EXTRA_test_list_unit_DEPENDENCIES) 
+	@rm -f test_list_unit$(EXEEXT)
+	$(LINK) $(test_list_unit_OBJECTS) $(test_list_unit_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -228,6 +238,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_air_log.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_air_timer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_list.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_list_unit.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

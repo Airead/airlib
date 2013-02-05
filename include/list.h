@@ -132,23 +132,6 @@ static inline void list_replace(struct list_head *old,
 	new->prev->next = new;
 }
 
-static inline void list_replace_init(struct list_head *old,
-					struct list_head *new)
-{
-	list_replace(old, new);
-	INIT_LIST_HEAD(old);
-}
-
-/**
- * list_del_init - deletes entry from list and reinitialize it.
- * @entry: the element to delete from the list.
- */
-static inline void list_del_init(struct list_head *entry)
-{
-	__list_del(entry->prev, entry->next);
-	INIT_LIST_HEAD(entry);
-}
-
 /**
  * list_move - delete from one list and add as another's head
  * @list: the entry to move
@@ -207,7 +190,7 @@ static inline int list_empty(const struct list_head *head)
  * @type:	the type of the struct this is embedded in.
  * @member:	the name of the list_struct within the struct.
  *
- * Note, that list is expected to be not empty.
+  * Note, that list is expected to be not empty.
  */
 #define list_first_entry(ptr, type, member) \
 	list_entry((ptr)->next, type, member)
@@ -239,6 +222,7 @@ static inline int list_empty(const struct list_head *head)
     for (pos = (head)->prev; pos != (head); pos = pos->prev)
 
 int list_init(struct list_head *h, unsigned long size, unsigned long len);
-struct list_head *list_loop_get_next(struct list_head *h, struct list_head *list);
+int list_free(struct list_head *h);
+struct list_head *list_loop_get_next(struct list_head *list, struct list_head *h);
 
 #endif /* _LIST_H_ */

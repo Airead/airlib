@@ -26,13 +26,20 @@ int list_init(struct list_head *h, unsigned long size, unsigned long len)
 
     return i;
 failed:
-    list_for_each_safe(_p, tmp, h) {
-        free(_p);
-    }
+    list_free(h);
     return -1;
 }
 
-struct list_head *list_loop_get_next(struct list_head *h, struct list_head *list)
+int list_free(struct list_head *h)
+{
+    struct list_head *_p, *tmp;
+    
+    list_for_each_safe(_p, tmp, h) {
+        free(_p);
+    }
+}
+
+struct list_head *list_loop_get_next(struct list_head *list, struct list_head *h)
 {
     struct list_head *_p;
 
