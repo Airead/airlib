@@ -222,7 +222,7 @@ static inline int list_empty(const struct list_head *head)
     for (pos = (head)->prev; pos != (head); pos = pos->prev)
 
 int list_init(struct list_head *h, unsigned long size, unsigned long len);
-int list_free(struct list_head *h);
+void list_free(struct list_head *h);
 struct list_head *list_loop_get_next(struct list_head *list, struct list_head *h);
 
 #endif /* _LIST_H_ */

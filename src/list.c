@@ -14,7 +14,7 @@
 int list_init(struct list_head *h, unsigned long size, unsigned long len)
 {
     int i;
-    struct list_head *list, *_p, *tmp;
+    struct list_head *list;
 
     for (i = 0; i < len; i++) {
         if ((list = malloc(size)) == NULL) {
@@ -30,7 +30,7 @@ failed:
     return -1;
 }
 
-int list_free(struct list_head *h)
+void list_free(struct list_head *h)
 {
     struct list_head *_p, *tmp;
     
